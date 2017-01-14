@@ -31,7 +31,7 @@ rename_parser.add_argument('new', help='new name of the bucket')
 add_parser = subparsers.add_parser('add', help='add a task to bucket')
 add_parser.add_argument('bucket', help='name of the bucket')
 add_parser.add_argument('name', help='name of the task')
-add_parser.add_argument('-d', '--desc', help='description of the task')
+add_parser.add_argument('-t', '--tags', nargs='+', default=[], help='tags for the task')
 
 
 # close task
@@ -43,7 +43,8 @@ close_parser.add_argument('name', help='name of the task')
 # list tasks
 list_parser = subparsers.add_parser('list', help='list the tasks from bucket')
 list_parser.add_argument('bucket', help='name of the bucket')
-list_parser.add_argument('-s', '--status', choices=['new', 'closed'])
+list_parser.add_argument('-s', '--status', choices=['new', 'closed'], help='filter by status')
+list_parser.add_argument('-t', '--tag', help='filter by a tag')
 
 
 def init():
@@ -67,14 +68,16 @@ def handler(action, args):
         bucket = task_bucket.Bucket(args.bucket)
         data = {
             'name': args.name,
-            'desc': args.desc,
+            'tags': args.tags,
             'status': 'new',
             'added_date': datetime.now().strftime(task_bucket.DATE_FORMAT)
         }
         bucket.add_task(data)
     if action == 'list':
         bucket = task_bucket.Bucket(args.bucket)
-        bucket.list_task()
+        status = args.status
+        tag = args.tag
+        bucket.list_task(status, tag)
     if action == 'close':
         bucket = task_bucket.Bucket(args.bucket)
         bucket.close_task(args.name)

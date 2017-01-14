@@ -24,11 +24,12 @@ class Bucket(object):
         json.dump(data, open(self.location, 'w'))
 
     def _pretty_print(self, data):
-        print('status | task | description | start date | end date\n')
+        print('status  | task | tags | start date | end date\n')
         for item in data:
-            mark = 'X' if item.get('closed_date') else ''
-            print('[ {0} ] | {1} | {2} | {3} | {4}\n'.format(
-                mark, item.get('name'), item.get('desc'),
+            mark = 'X' if item.get('closed_date') else ' '
+            tags = ','.join(item.get('tags')) if item.get('tags') else 'NA'
+            print('[{0}] | {1} | {2} | {3} | {4}\n'.format(
+                mark, item.get('name'), tags,
                 item.get('added_date'), item.get('closed_date', 'NA')
             ))
 
@@ -67,21 +68,28 @@ class Bucket(object):
         self._dump(data)
         return
 
-    def _filter(self, data, status):
+    def _filter_by_status(self, data, status):
         tasks = []
         for item in data:
             if item['status'] == status:
                 tasks.append(item)
         return tasks
 
-    def list_task(self, status=None):
+    def _filter_by_tag(Self, data, tag):
+        tasks = []
+        for item in data:
+            if tag in item.get('tags', []):
+                tasks.append(item)
+        return tasks
+
+    def list_task(self, status=None, tag=None):
         data = self._load()
         if data is None:
             print('{0} is not a valid bucket'.format(self.name))
         else:
-            if not status:
-                self._pretty_print(data)
-            else:
-                tasks = self._filter(data, status)
-                self._pretty_print(tasks)
+            if status:
+                data = self._filter_by_status(data, status)
+            if tag:
+                data = self._filter_by_tag(data, tag)
+            self._pretty_print(data)
         return
