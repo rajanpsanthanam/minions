@@ -1,7 +1,22 @@
 # minions
 
-minions are command line interface for handling daily tasks
+simple command line interface for managing daily tasks
 
-you can create buckets and add task in them, list them, filter them and close them
+```
+usage: minion [-h] {create,delete,rename,add,close,list,edit,remove} ...
 
-just a simple way to handle todo tasks via command line
+positional arguments:
+  {create,delete,rename,add,close,list,edit,remove}
+                        commands
+    create              create empty bucket
+    delete              delete a bucket
+    rename              rename a bucket
+    add                 add a task to bucket
+    close               close the task from bucket
+    list                list the tasks from bucket
+    edit                edit a task from bucket
+    remove              remove a task from bucket
+
+optional arguments:
+  -h, --help            show this help message and exit
+```
