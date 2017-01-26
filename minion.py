@@ -47,6 +47,21 @@ list_parser.add_argument('-s', '--status', choices=['new', 'closed'], help='filt
 list_parser.add_argument('-t', '--tag', help='filter by a tag')
 
 
+# edit task
+edit_parser = subparsers.add_parser('edit', help='edit a task from bucket')
+edit_parser.add_argument('bucket', help='name of the bucket')
+edit_parser.add_argument('name', help='name of the task')
+edit_parser.add_argument('-n', '--new', help='new name of the task')
+edit_parser.add_argument('-a', '--addtags', nargs='+', default=[], help='add tags to the task')
+edit_parser.add_argument('-r', '--removetags', nargs='+', default=[], help='remove tags from the task')
+
+
+# remove task
+remove_parser = subparsers.add_parser('remove', help='remove a task from bucket')
+remove_parser.add_argument('bucket', help='name of the bucket')
+remove_parser.add_argument('name', help='name of the task')
+
+
 def init():
     if not os.path.isdir(task_bucket.MINION_HOME):
         os.mkdir(task_bucket.MINION_HOME)
@@ -81,6 +96,18 @@ def handler(action, args):
     if action == 'close':
         bucket = task_bucket.Bucket(args.bucket)
         bucket.close_task(args.name)
+    if action == 'edit':
+        bucket = task_bucket.Bucket(args.bucket)
+        data = {
+            'name': args.name,
+            'new': args.new,
+            'add_tags': args.addtags,
+            'remove_tags': args.removetags
+        }
+        bucket.edit_task(data)
+    if action == 'remove':
+        bucket = task_bucket.Bucket(args.bucket)
+        bucket.remove_task(args.name)
 
 
 if __name__ == "__main__":

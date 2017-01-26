@@ -34,7 +34,10 @@ class Bucket(object):
             ))
 
     def create(self):
-        self._dump([])
+        if not os.path.isfile(self.location):
+            self._dump([])
+        else:
+            print('"{0}" bucket already exists'.format(self.name))
         return
 
     def rename(self, name):
@@ -49,13 +52,54 @@ class Bucket(object):
             print('{0} is not a valid bucket'.format(self.name))
         return
 
+    def _check_for_unique_task(self, data, name):
+        for item in data:
+            if item['name'] == name:
+                return True
+        return False
+
     def add_task(self, task):
         data = self._load()
+        task_name = task['name']
         if data is None:
             print('{0} is not a valid bucket'.format(self.name))
         else:
-            data.append(task)
-            self._dump(data)
+            if self._check_for_unique_task(data, task_name):
+                print('"{0}" task already exists'.format(task_name))
+            else:
+                data.append(task)
+                self._dump(data)
+        return
+
+    def edit_task(self, task):
+        data = self._load()
+        new_name = task['new']
+        if data is None:
+            print('{0} is not a valid bucket'.format(self.name))
+        else:
+            if self._check_for_unique_task(data, new_name):
+                print('"{0}" task already exists'.format(new_name))
+            else:
+                for item in data:
+                    if item['name'] == task['name']:
+                        item['name'] = new_name if new_name else item['name']
+                        if task['add_tags']:
+                            item['tags'].extend(task['add_tags'])
+                            item['tags'] = list(set(item['tags']))
+                        if task['remove_tags']:
+                            for tag in task['remove_tags']:
+                                if tag in item['tags']:
+                                    item['tags'].remove(tag)
+                self._dump(data)
+        return
+
+    def remove_task(self, name):
+        data = self._load()
+        for item in data:
+            if item['name'] == name:
+                data.remove(item)
+                break
+        self._dump(data)
         return
 
     def close_task(self, name):
