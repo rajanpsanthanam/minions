@@ -5,6 +5,7 @@ simple command line interface for managing daily tasks
 ```
 usage: minion [-h] {create, delete, rename, add, close, list, edit, remove} ...
 
+
 positional arguments:
   {create, delete, rename, add, close, list, edit, remove}
                         commands
