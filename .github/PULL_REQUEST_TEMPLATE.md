@@ -1,22 +1,16 @@
-## Status
-**READY/IN DEVELOPMENT/HOLD**
 
 ## Migrations
-YES | NO
+- [ ] Yes
+- [ ] No
 
 ## Description
 A few sentences describing the overall goals of the pull request's commits.
 
-## Related PRs
-List related PRs against other branches:
-
-branch | PR
------- | ------
-other_pr_production | [link]()
-other_pr_master | [link]()
+## Related PR's
+List related PR's against other branches:
 
 
-## Todos
+## Self Review Checks
 - [ ] Tests
 - [ ] Documentation
 
@@ -25,18 +19,7 @@ other_pr_master | [link]()
 Notes regarding deployment the contained body of work.  These should note any
 db migrations, etc.
 
-## Steps to Test or Reproduce
-Outline the steps to test or reproduce the PR here.
-
-```sh
-git pull --prune
-git checkout <feature_branch>
-bundle; script/server
-```
-
-1.
-
 ## Impacted Areas in Application
 List general components of the application that this PR will affect:
 
-* 
+*
