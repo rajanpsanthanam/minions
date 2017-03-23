@@ -1,5 +1,5 @@
 ## Description
-A few sentences describing the overall goals of the pull request's commits.
+Description on the overall goal of the pull request:
 
 ## Related PR's
 List related PR's against other branches:
@@ -16,8 +16,7 @@ List related PR's against other branches:
 
 
 ## Deploy Notes
-Notes regarding deployment the contained body of work.  These should note any
-db migrations, etc.
+Notes regarding any special needs on deployment, like elasticsearch setup, redis etc
 
 *
 
