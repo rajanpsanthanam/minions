@@ -1,6 +1,6 @@
 # minions
 
-simple command line interface for managing daily tasks
+simple command line interface to managing daily tasks
 
 ```
 usage: minion [-h] {create, delete, rename, add, close, list, edit, remove} ...
