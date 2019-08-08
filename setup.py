@@ -2,8 +2,8 @@ from distutils.core import setup
 
 setup(
     name="minions",
-    version="0.1.0",
-    description="A lightweight todo list application from your command line.",
+    version="1.0.0",
+    description="A lightweight todo list from your command line.",
     author="Rajan Santhanam",
     author_email="rajanpsanthanam@gmail.com",
     license="three-clause BSD",
